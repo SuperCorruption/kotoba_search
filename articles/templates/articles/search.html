@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>検索ページ</title>
+</head>
+<body>
+	<h1>検索</h1>
+	<form method="GET" action="{% url 'search_articles' %}">
+		<input type="text" name="q" placeholder="検索...">
+		<button type="submit">検索</button>
+	</form>
+
+	{% if results %}
+	<h2>検索結果</h2>
+		<ul>
+		{% for article in results %}
+			<li><a href="{% url 'view_article' article.id %}">{{ article.title }}</a></li>
+			
+		{% endfor %}
+	        </ul>
+	{% elif query %}
+		<p> [{{ query }}]に関する記事は見つかりませんでした。</p>
+	{% endif %}
+</body>
+</html>
+

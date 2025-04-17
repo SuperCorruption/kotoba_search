@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, instal-scale=1.0">
+	<title>ホーム</title>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+	<style>
+	h2 {
+		border-bottom:3px solid #000;
+	}
+
+	h3 {
+		border-bottom: 3px solid #000;
+	}
+	h4 {
+		border-bottom: 3px solid #000;
+	}
+
+	</style>
+
+</head>
+<body>
+	<h1>東方project語句検索サイト(仮)</h1>
+	</br>
+	<h2>テスト用</h2>
+	<p>作成されたアカウント,記事は全て一度消去させていただきます。
+	<br>そのため、アカウントのパスワードは保存せず,記事も適当に作るのが良いかと思います。
+	<br>テストをして頂き,ありがとうございます。
+	<br>
+	</p>
+	<a href="{% url 'search_articles' %}">検索ページへ</a><br>
+	<a href="{% url 'create_article' %}">記事を作成する</a><br>
+	<a href="{% url 'signup' %}">アカウント作成</a>
+</body>
+</html>

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    form {
+        max-width: 700px;
+        margin: auto;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 4px;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    textarea {
+        height: 150px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+
+<h1>記事作成</h1>
+<form method="post">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="{{ form.title.id_for_label }}">語句:</label>
+        {{ form.title }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.content.id_for_label }}">内容と考察:</label>
+        {{ form.content }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.work_title.id_for_label }}">作品名:</label>
+        {{ form.work_title }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.volume.id_for_label }}">巻数:</label>
+        {{ form.volume }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.episode.id_for_label }}">話数:</label>
+        {{ form.episode }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.subtitle.id_for_label }}">サブタイトル:</label>
+        {{ form.subtitle }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.page_number.id_for_label }}">ページ数:</label>
+	{{ form.page_number }}
+    </div>
+
+    <div class="form-group">
+	<label for="{{ form.tags.id_for_label }}">タグ:</label>
+	{{ form.tags }}
+	<small> {{ form.tags.help_text }}</small>
+    </div>
+
+    <button type="submit">投稿</button>
+</form>
+{% endblock %}
+  
