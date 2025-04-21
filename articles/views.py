@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout
+from django.contrib.auth.models import User
 from .models import Article, Tag
 from django.db.models import Q
 from .forms import ArticleForm
@@ -17,7 +18,8 @@ def Replace(title):
     return title.replace('_', ' ')
 
 def home(request):
-    return render(request, 'articles/home.html')
+    latest_articles = Article.objects.order_by('-id')[:10]
+    return render(request, 'articles/home.html', {'latest_articles':latest_articles})
 
 def signup(request):
     if request.method == "POST":
@@ -74,6 +76,11 @@ def article_detail(request, work_title, title_slug, article_id):
         return redirect('article_detail', work_title=article.work_title, title_slug=article.title_slug, article_id=article_id)
 
     return render(request, 'article_detail.html', {'article': article})
+
+def my_page(request, username):
+    user = get_object_or_404(User, username=username)
+    articles = Article.objects.filter(author=user).order_by('-id')
+    return render(request, 'articles/my_page.html', {'user': user, 'articles': articles})
 
 @login_required
 def create_article(request):

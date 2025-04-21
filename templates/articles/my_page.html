@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+	<style>
+	h1 {
+                border-bottom:3px solid #000;
+        }
+	</style>
+
+{% block content %}
+<h1><font size = "3">{{ user.username }} さんの投稿</font></h1>
+
+<ul>
+  {% for article in articles %}
+    <li>
+      <a href="{% url 'articles:view_article' article.id %}">{{ article.title }}</a>
+    </li>
+  {% empty %}
+    <li>まだ投稿がありません。</li>
+  {% endfor %}
+</ul>
+
+<a href="/">← ホームへ</a>
+{% endblock %}

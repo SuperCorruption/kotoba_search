@@ -16,5 +16,6 @@ urlpatterns = [
     path('accounts/login/', LoginView.as_view(), name='login'),
     path('signup/', views.signup, name='signup'),
     path('permisson-denined/', views.permission_denied_view, name='permission_denied'),
+    path('mypage/<str:username>/', views.my_page, name='my_page'),
 ]
 
