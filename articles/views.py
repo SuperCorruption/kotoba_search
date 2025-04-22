@@ -52,7 +52,6 @@ def search_articles(request):
                     Q(title__icontains=word) |
                     Q(work_title__icontains=word) |
                     Q(subtitle__icontains=word) |
-                    Q(author__username__icontains=word) |
                     Q(tags__name__icontains=word)
             ).distinct()
 
