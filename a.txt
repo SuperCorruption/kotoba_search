@@ -1,0 +1,15 @@
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+# This is the configuration file for libaudit tunables.
+# It is currently only used for the failure_action tunable.
+
+# failure_action can be: log, ignore, terminate
+failure_action = ignore
+
+
