@@ -1,9 +1,3 @@
-vim forms.py
-vim views.py
-cd kotoba_search
-source venv/bin/activate
-python manage.py runserver 8080
-cd articles
 vim views.py
 cd kotoba_search
 source venv/bin/activate
@@ -1998,3 +1992,9 @@ source venv/bin/activate
 python manage.py runserver 8080
 git add .
 git commit -m "fix: base.htmlの修正"
+git add .
+git commit -m "fix: base.htmlの修正"
+cd kotoba_search/templates
+ls
+vim bse.html
+vim base.html
