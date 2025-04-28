@@ -1,16 +1,3 @@
-vim views.py
-cd kotoba_search
-source venv/bin/activate
-python manage.py runserver 8080
-cd articles
-vim views.py
-vim urls.py
-cd ..
-cd kotoba_search
-ls
-vim urls.py
-cd kotoba_search
-source venv/bin/activate
 python manage.py runserver 8080
 cd articles
 vim urls.py
@@ -1998,3 +1985,16 @@ cd kotoba_search/templates
 ls
 vim bse.html
 vim base.html
+git add .
+git push origin main
+git commit -m "fix: base.htmlの修正"
+git push origin main
+git remote -v
+git branch
+git push origin * master
+git init
+git add .
+git commit -m "fix: base.htmlの修正"
+git remote add origin https://SuperCorruption/kotoba_search.git
+git commit -a "fix: base.htmlの修正"
+git commit -m "fix: base.htmlの修正"
