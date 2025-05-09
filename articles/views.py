@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from .models import Article, Tag
+from django.core.paginator import Paginator
 from django.db.models import Q
 from .forms import ArticleForm
 from django.urls import reverse
@@ -43,6 +44,7 @@ def permission_denied_view(request):
 def search_articles(request):
     query = request.GET.get('q', '')
     tag_query = request.GET.get('tag', '')
+    page_number = request.GET.get('page', 1)
     results = Article.objects.all()
     
     if query:
@@ -57,6 +59,30 @@ def search_articles(request):
 
     if tag_query:
         results = results.filter(tags__name=tag_query)
+
+    paginator = Paginator(results, 15)
+    page_number = request.GET.get("page") or 1
+    page_obj = paginator.get_page(page_number)
+
+    current_page = page_obj.number
+    total_pages = paginator.num_pages
+
+    start_page = max(current_page - 2, 1)
+    end_page = min(start_page + 4, total_pages)
+    if end_page - start_page < 4:
+        start_page = max(end_page - 4, 1)
+
+    page_range = range(start_page, end_page + 1)
+
+    context = {
+        'request': request,
+        'results': page_obj.object_list,
+        'query': query,
+        'tag_query': tag_query,
+        'page_obj': page_obj,
+        'page_range': page_range,
+    }
+
 
     return render(request, 'articles/search.html', {'request': request, 'results': results, 'query': query, 'tag_query': tag_query,})
 
