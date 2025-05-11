@@ -38,11 +38,6 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-<<<<<<< HEAD
-VIRTUAL_ENV=/home/taketo/venv
-=======
-VIRTUAL_ENV=/home/taketo/kotoba_search/venv
->>>>>>> ac86977a (fix: search_articlesの修正)
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
