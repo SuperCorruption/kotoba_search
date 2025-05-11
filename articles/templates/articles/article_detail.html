@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ article.title }} | {{ article.work_title }}</title>
+    
+    <style>
+        h2 {
+		border-bottom: 3px solid #000;
+        }
+    </style>
+    
+</head>
+<body>
+    <h1>{{ article.title }}</h1>
+    <h2><font size="3"><strong>メモ</strong></font></h2>
+    <p>{{ article.content|safe }}</p>
+    <p>作品名:{{ article.work_title }}<p>
+    <p><strong>巻数:</strong> {{ article.volume }}</p>
+    <p><strong>話数:</strong> {{ article.episode }}</p>
+    <p><strong>サブタイトル:</strong> {{ article.subtitle }}</p>
+    <p><strong>ページ数:</strong> {{ article.page_number }}</p>
+    <p><strong>タグ:</strong>
+    	{% if article.tags.all %}
+		{% for tag in article.tags.all %}
+			<a href="{% url 'articles:search_articles' %}?tag={{ tag.name }}">{{ tag.name}}</a>
+		{% endfor %}
+	{% else %}
+		なし
+	{% endif %}
+    </p>
+
+    <hr>
+    <a href="/">ホームへ戻る</a> |
+    <a href="{% url 'articles:edit_article_detailed' work_title=article.work_title title=article.title author=article.author.username article_id=article.id %}">編集</a>
+</body>
+</html>
+

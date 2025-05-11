@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>検索ページ</title>
+</head>
+<body>
+	<h1>検索</h1>
+	<form method="GET" action="{% url 'search_articles' %}">
+		<input type="text" name="q" placeholder="検索...">
+		<button type="submit">検索</button>
+	</form>
+
+	{% if results %}
+	<h2>検索結果</h2>
+		<ul>
+		{% for article in results %}
+			<li><a href="{% url 'view_article' article.id %}">{{ article.title }}</a></li>
+			
+		{% endfor %}
+	        </ul>
+
+		<!-- ページネーション -->
+                <div class="pagination">
+            		{% if page_obj.has_previous %}
+                		<a href="?q={{ query }}&tag={{ tag_query }}&page={{ page_obj.previous_page_number }}">« 前へ</a>
+            		{% endif %}
+
+            		{% for num in page_range %}
+                		{% if num == page_obj.number %}
+                    			<strong>{{ num }}</strong>
+                		{% else %}
+                    			<a href="?q={{ query }}&tag={{ tag_query }}&page={{ num }}">{{ num }}</a>
+                		{% endif %}
+            		{% endfor %}
+
+            		{% if page_obj.has_next %}
+                		<a href="?q={{ query }}&tag={{ tag_query }}&page={{ page_obj.next_page_number }}">次へ »</a>
+            		{% endif %}
+        	</div>
+
+	{% elif query %}
+		<p> [{{ query }}]に関する記事は見つかりませんでした。</p>
+	{% endif %}
+</body>
+</html>
+

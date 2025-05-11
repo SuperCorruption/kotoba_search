@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, instal-scale=1.0">
+	<title>ホーム</title>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+	<style>
+	h2 {
+		border-bottom:3px solid #000;
+	}
+	.container {
+		display: flex;
+	}
+	.main-content {
+		flex: 3;
+		padding-right: 20px;
+	}
+	.sidebar {
+		flex: 1;
+		border-left: 2px solid #ccc;
+		padding-left: 20px;
+	}
+
+	</style>
+
+</head>
+<body>
+	<h1>東方Proect語句検索サイト(仮)</h1>
+	</br>
+	<div class="container">
+		<!-- メインコンテンツ -->
+		<div class="main-content">
+			<h2>テスト用</h2>
+			<p>作成されたアカウント、記事は全て一度消去させていただきます。
+			<br>そのため、アカウントのパスワードは保存せず、記事も適当に作るのが良いかと思います。
+			<br>今回のアカウント名は[a]から始めて頂けるとありがたいです。
+			<p>テストをして頂き、ありがとうございます。
+			</p>
+			</p>
+			<a href="{% url 'search_articles' %}">検索ページへ</a><br>
+			<a href="{% url 'create_article' %}">記事を作成する</a><br>
+			<a href="{% url 'signup' %}">アカウント作成</a>
+		</div>
+
+		<!-- サイドバー -->
+		<div class="sidebar">
+			<h3>メニュー</h3>
+			{% if user.is_authenticated %}
+				<p><a href="{% url 'articles:my_page' user.username %}">マイページ</a></p>
+				<p><a href="{% url 'logout' %}">ログアウト</a></p>
+			{% else %}
+				<p><a href="{% url 'login' %}">ログイン</a></p>
+			{% endif %}
+
+			<h3>最新の投稿</h3>
+			<ul>
+                		{% for article in latest_articles %}
+                    			<li>
+                        			<a href="{% url 'articles:view_article' article.id %}">
+                            				{{ article.title }}
+                        			</a>
+                    			</li>
+                		{% empty %}
+                    			<li>投稿がありません</li>
+                		{% endfor %}
+            		</ul>
+        	</div>
+    	</div>
+	
+</body>
+</html>

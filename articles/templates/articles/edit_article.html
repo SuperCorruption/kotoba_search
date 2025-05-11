@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>記事編集</title>
+</head>
+<body>
+    <h2>記事編集</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+        <label for="{{ form.title.id_for_label }}">語句:</label>
+        {{ form.title }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.content.id_for_label }}">メモ:</label>
+        {{ form.content }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.work_title.id_for_label }}">作品名:</label>
+        {{ form.work_title }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.volume.id_for_label }}">巻数:</label>
+        {{ form.volume }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.episode.id_for_label }}">話数:</label>
+        {{ form.episode }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.subtitle.id_for_label }}">サブタイトル:</label>
+        {{ form.subtitle }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.page_number.id_for_label }}">ページ数:</label>
+        {{ form.page_number }}
+    </div>
+
+    <div class="form-group">
+	<label for="{{ form.tags.id_for_label }}">タグ:</label>
+        {{ form.tags }}
+        <small>{{ form.tags.help_text }}</small>
+    </div>
+
+    <button type="submit">保存</button>
+    </form>
+</body>
+</html>

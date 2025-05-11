@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>記事作成</title>
+</head>
+<body>
+	<h2>記事作成</h2>	
+	<form method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="subtitle">作成</button>
+	</form>
+	<a href = "{% url 'home' %}">ホームへ戻る</a>
+</body>
+</html>

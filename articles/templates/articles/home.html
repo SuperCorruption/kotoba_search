@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>東方語句検索サイト(仮)</title>
+</head>
+<body>
+    <h1>ようこそ！</h1>
+    <p>ここは東方projectの考察を助けるために作成されたサイトです。</p>
+    <!-- 検索ページへのリンク -->
+    <a href="{% url 'search_articles' %}">検索ページへ</a>
+
+    <!-- 記事作成ページへのリンク-->
+    {% if user.is_authenticated %}
+    	<br><br>
+	<a href="{% url 'create_article' %}">記事を作成する</a>
+    {% else %}
+    <p><a href = "/accounts/login/">ログイン</a>記事を作成できます。</p>
+    {% endif %}
+
+</body>
+</html>
+
