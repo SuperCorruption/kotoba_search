@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 ROOT_URLCONF = 'kotoba_search.urls'
 
 DEBUG = False
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'kotoba-search.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'kotoba-search-test.onrender.com']
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 if not SECRET_KEY:
