@@ -7,7 +7,7 @@ class ArticleForm(forms.ModelForm):
             required=False,
             label='タグ',
             help_text='例: a, b, c',
-            widget=forms.TextInput(attrs={'class': 'form-control', 'placsholder': 'a, b, c'})
+            widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'a, b, c'})
     )
 
     class Meta:
@@ -30,3 +30,9 @@ class ArticleForm(forms.ModelForm):
             'page_number': forms.NumberInput(attrs={'class': 'form-control', 'min': 1}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 10}),
         }
+
+    def __init__(self, *args, **kwargs):
+        tags_initial = kwargs.pop('tags_initial', None)
+        super().__init__(*args, **kwargs)
+        if tags_initial:
+            self.fields['tags'].initial = tags_initial

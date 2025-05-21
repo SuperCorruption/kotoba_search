@@ -39,17 +39,17 @@
     {% csrf_token %}
 
     <div class="form-group">
-        <label for="{{ form.title.id_for_label }}">語句:</label>
+        <label for="{{ form.title.id_for_label }}">語句(必須):</label>
         {{ form.title }}
     </div>
 
     <div class="form-group">
-        <label for="{{ form.content.id_for_label }}">メモ:</label>
+        <label for="{{ form.content.id_for_label }}">記事内容(必須):</label>
         {{ form.content }}
     </div>
 
     <div class="form-group">
-        <label for="{{ form.work_title.id_for_label }}">作品名:</label>
+        <label for="{{ form.work_title.id_for_label }}">作品名(必須, 該当するものがないならその他または特になし):</label>
         {{ form.work_title }}
     </div>
 

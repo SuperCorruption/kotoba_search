@@ -2,9 +2,20 @@
 
 {% block content %}
   <h2>アカウント作成</h2>
+  <p>正常に作成されると、ログインした状態でホーム画面に戻ります。
+  </p>
+  {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+              <li class="alert {{ message.tags }}">{{ message }}</li>
+          {% endfor %}
+      </ul>
+  {% endif %}
+
   <form method="post">
-	  {% csrf_token %}
-	  {{ form.as_p }}
-	  <button type="submit">登録</buttton>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">登録</button>
   </form>
+    <p>すでにアカウントをお持ちの方は<a href="{% url 'login' %}">こちらからログイン</a></p>
 {% endblock %}

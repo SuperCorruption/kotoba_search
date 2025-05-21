@@ -15,10 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.contrib.auth.views import LoginView
 from articles import views
-from articles.views import home, create_article, user_logout, search_articles, view_article, edit_article
+from articles.views import home, create_article, user_logout, search_articles, view_article, edit_article, delete_article, confirm_delete_article
+
+from django.conf import settings
+from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,6 +35,9 @@ urlpatterns = [
     path('logout/', user_logout, name='logout'),
     path('create/', create_article, name='create_article'),
     path("edit/<str:work_title>/<str:title>/<str:author>/<int:article_id>", views.edit_article, name="edit_article_detailed"),
-    path('permisson-denined/', views.permission_denied_view, name='permission_denied'),
+    path("delete/<str:work_title>/<str:title>/<str:author>/<int:article_id>/confirm/", confirm_delete_article, name="confirm_delete_article"),
+    path("delete/<int:article_id>/", views.delete_article, name="delete_article"),
+    path('permisson_denied/', views.permission_denied_view, name='permission_denied'),
+    re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
 ]
 

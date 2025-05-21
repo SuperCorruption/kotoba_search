@@ -3,11 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 from .models import Article, Tag
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .forms import ArticleForm
 from django.urls import reverse
+from django.contrib import messages
 import html
 
 def kaigyou(text):
@@ -28,18 +31,21 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("home")
-
+            messages.success(request, 'アカウントが作成されました。')
+            return redirect('home')
+        else:
+            messages.error(request, 'ユーザー名は既に存在しています。別の名前を使ってください。')
     else:
         form = UserCreationForm()
-    return render(request, "registration/signup.html", {"form": form})
+
+    return render(request, 'registration/signup.html', {'form': form})
 
 def user_logout(request):
     logout(request)
     return redirect('home')
 
 def permission_denied_view(request):
-    return render(request, 'errors/permission_denied.html', status=404)
+    return render(request, 'errors/permission_denied.html')
 
 def search_articles(request):
     query = request.GET.get('q', '')
@@ -154,36 +160,42 @@ def edit_article(request, work_title, title, author, article_id):
         return redirect( 'permission_denied' )
 
     if request.method == 'POST':
-        title = request.POST.get('title')
-        content = request.POST.get('content')
-        content = kaigyou(content)
-        work_title = request.POST.get('work_title')
-        work_title = Replace(work_title)
-        volume = request.POST.get('volume') or None
-        episode = request.POST.get('episode') or None
-        subtitle = request.POST.get('subtitle') or None
-        page_number = request.POST.get('page_number') or None
+        form = ArticleForm(request.POST, instance=article)
 
-        article.title = title
-        article.content = content
-        article.work_title = work_title
-        article.volume = volume
-        article.episode = episode
-        article.subtitle = subtitle
-        article.page_number = page_number
+        if form.is_valid():
+            article = form.save(commit=False)
+            article.content=kaigyou(article.content)
+            article.work_title = Replace(article.work_title)
+            article.save()
 
-        tags_input = request.POST.get('tags', '')
-        tag_names = [name.strip() for name in tags_input.split(',') if name.strip()]
+            tags_input = form.cleaned_data.get('tags', '')
+            tag_names = [name.strip() for name in tags_input.split(',') if name.strip()]
+            article.tags.clear()
+            for name in tag_names:
+                tag, _ = Tag.objects.get_or_create(name=name)
+                article.tags.add(tag)
 
-        article.tags.clear()
-        for name in tag_names:
-            tag, _ = Tag.objects.get_or_create(name=name)
-            article.tags.add(tag)
-
-        article.save()
-        return redirect("articles:detailed_article_view", work_title=article.work_title, title=article.title, author=article.author.username, article_id=article.id)
+            return redirect("articles:detailed_article_view", work_title=article.work_title, title=article.title, author=article.author.username, article_id=article.id)
 
     else:
-        form = ArticleForm(instance=article)
-    tags_str = ', '.join(tag.name for tag in article.tags.all())
-    return render(request, "articles/edit_article.html", {"form": form, "article": article, "tags": tags_str})
+         tags_str = ', '.join(tag.name for tag in article.tags.all())
+         form = ArticleForm(instance=article, tags_initial=tags_str)
+    return render(request, "articles/edit_article.html", {"form": form, "article": article})
+
+@login_required
+def confirm_delete_article(request, work_title, title, author, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    if article.author != request.user:
+        return redirect('articles: permission_denied')
+    return render(request, 'articles/confirm_delete.html', {'article': article})
+
+@login_required
+@require_POST
+def delete_article(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+
+    if article.author != request.user:
+        return redirect('articles:permission_denied') 
+
+    article.delete()
+    return redirect('articles:home')

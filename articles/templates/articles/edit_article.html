@@ -9,17 +9,17 @@
     <form method="POST">
         {% csrf_token %}
         <div class="form-group">
-        <label for="{{ form.title.id_for_label }}">語句:</label>
+        <label for="{{ form.title.id_for_label }}">語句(必須):</label>
         {{ form.title }}
     </div>
 
     <div class="form-group">
-        <label for="{{ form.content.id_for_label }}">メモ:</label>
+        <label for="{{ form.content.id_for_label }}">記事内容(必須):</label>
         {{ form.content }}
     </div>
 
     <div class="form-group">
-        <label for="{{ form.work_title.id_for_label }}">作品名:</label>
+        <label for="{{ form.work_title.id_for_label }}">作品名(必須):</label>
         {{ form.work_title }}
     </div>
 
@@ -51,5 +51,11 @@
 
     <button type="submit">保存</button>
     </form>
+
+    <form action="{% url 'delete_article' article_id=article.id %}" method="post">
+        {%csrf_token %}
+        <button type="submit" onclick="return confirm('本当に削除しますか？');">記事を削除</button>
+    </form>
+
 </body>
 </html>
