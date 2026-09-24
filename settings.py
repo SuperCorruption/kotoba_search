@@ -7,13 +7,13 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 ROOT_URLCONF = 'kotoba_search.urls'
 
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = os.getenv('DEBUG', 'False') == 'False'
 
 allowed_hosts_env = os.getenv('ALLOWED_HOSTS')
 if allowed_hosts_env:
     ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_env.split(',')]
 else:
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '160.251.213.22']
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '160.251.213.22', 'kotoba-search.net', 'www.kotoba-seaarch.net']
 
 # ドメインを取得したら 'https://your-domain.com' を追加
 # Django 4.0以降、フォーム送信（POST）のCSRFチェックで必須
