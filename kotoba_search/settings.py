@@ -7,8 +7,24 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 ROOT_URLCONF = 'kotoba_search.urls'
 
-DEBUG = False
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'kotoba-search.onrender.com', '160.251.213.22']
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
+
+allowed_hosts_env = os.getenv('ALLOWED_HOSTS')
+if allowed_hosts_env:
+    ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_env.split(',')]
+else:
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '160.251.213.22']
+
+# ドメインを取得したら 'https://your-domain.com' を追加
+# Django 4.0以降、フォーム送信（POST）のCSRFチェックで必須
+CSRF_TRUSTED_ORIGINS = [
+    'http://160.251.213.22',
+    'https://160.251.213.22',
+    # ドメインを取得したら以下も追加（例）
+    # 'https://your-domain.com',
+]
+
+
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 if not SECRET_KEY:
@@ -38,7 +54,7 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -52,10 +68,10 @@ TEMPLATES = [
 ]
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    BASE_DIR / 'static',
 ]
 
 DATABASES = {
@@ -67,3 +83,4 @@ DATABASES = {
 
 LOGIN_REDIRECT_URL = '/'
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

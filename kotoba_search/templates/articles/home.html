@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ホーム</title>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <style>
+        h2 {
+                border-bottom:3px solid #000;
+        }
+	h3 {
+		border-bottom:3px solid #000;
+	}
+	h4 {
+		border-bottom:3px solid #000;
+	}
+        .container {
+                display: flex;
+        }
+        .main-content {
+                flex: 3;
+                padding-right: 20px;
+        }
+        .sidebar {
+                flex: 1;
+                border-left: 2px solid #ccc;
+                padding-left: 20px;
+        }
+
+        </style>
+
+</head>
+<body>
+        <h1><font size="7">東方語句検索サイト</font></h1>
+        </br>
+        <div class="container">
+                <!-- メインコンテンツ -->
+                <div class="main-content">
+
+                    <h2><font size = "3">概要</font></h2>
+        	    <p>このサイトは東方projectの考察を助けるために作っています。
+        	    <br>原作を読み返す時の手助け程度のものになる事を期待しております。
+        	    <br>原作の話の内容を全て想起させてしまう記事だけは作らないようにお願いします。(二次創作ガイドラインを守るのは当然として)
+                    <br>
+        	    </p>
+		    <h3><font size = "3">検索機能について</font></h3>
+		    <p>語句、作品タイトル、タグによって検索できます。
+		    <br>タグの使い方によって、まとめたい記述を整理できます。
+		    <br>不便なサイトにタグを巧く使って抗いましょう。
+		    </p>
+        	    <h4><font size="3">スマホの方へ</font></h4>
+		    <p>アカウント作成や記事投稿で意図していないバグが起きることがあります。
+		    <br>原因が分からないので対応できません。
+		    <br>PCで使うことを推奨します。
+                    </p>
+        	    <br>
+                    <a href="{% url 'search_articles' %}">検索ページへ</a><br>
+                    <a href="{% url 'create_article' %}">記事を作成する</a><br>
+                    <a href="{% url 'signup' %}">アカウント作成</a>
+                </div>
+
+                <!-- サイドバー -->
+                <div class="sidebar">
+                    <h5>メニュー</h5>
+                    {% if user.is_authenticated %}
+                        <p><a href="{% url 'articles:my_page' user.username %}">マイページ</a></p>
+                        <p><a href="{% url 'logout' %}">ログアウト</a></p>
+                    {% else %}
+                        <p><a href="{% url 'login' %}">ログイン</a></p>
+                    {% endif %}
+
+                    <h6>最新の投稿</h6>
+                    <ul>
+                        {% for article in latest_articles %}
+                            <li>
+                                <a href="{% url 'articles:view_article' article.id %}">
+                                    {{ article.title }}
+                                </a>
+                            </li>
+                        {% empty %}
+                            <li>投稿がありません</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+        </div>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+<<<<<<< HEAD
+#!/home/taketo/venv/bin/python3
+=======
+#!/home/taketo/kotoba_search/venv/bin/python3
+>>>>>>> ac86977a (fix: search_articlesの修正)
+# -*- coding: utf-8 -*-
+import re
+import sys
+from dotenv.__main__ import cli
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(cli())

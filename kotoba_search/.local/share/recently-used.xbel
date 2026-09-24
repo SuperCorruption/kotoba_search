@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbel version="1.0"
+      xmlns:bookmark="http://www.freedesktop.org/standards/desktop-bookmarks"
+      xmlns:mime="http://www.freedesktop.org/standards/shared-mime-info"
+>
+  <bookmark href="file:///home/taketo/UNIXEX/14/PracticeTargz/hemo.dnd.ps" added="2024-07-22T02:36:32.975867Z" modified="2024-07-22T02:36:32.975871Z" visited="2024-07-22T02:36:32.975868Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="application/postscript"/>
+        <bookmark:applications>
+          <bookmark:application name="Document Viewer" exec="&apos;evince %u&apos;" modified="2024-07-22T02:36:32.975869Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/taketo/UNIXEX/14/PracticeTargz/090Nagai14.ps" added="2024-07-22T02:38:57.293574Z" modified="2024-07-22T02:38:57.585188Z" visited="2024-07-22T02:38:57.293575Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="application/postscript"/>
+        <bookmark:applications>
+          <bookmark:application name="Document Viewer" exec="&apos;evince %u&apos;" modified="2024-07-22T02:38:57.585186Z" count="2"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+</xbel>
