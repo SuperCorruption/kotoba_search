@@ -1,0 +1,5 @@
+venv/
+__pychace__/
+db.splite3
+*.pyc
+*.swp
